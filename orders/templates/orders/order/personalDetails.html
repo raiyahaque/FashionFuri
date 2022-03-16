@@ -1,0 +1,90 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+{% block title %}
+   Checkout
+{% endblock %}
+
+{% block body %}
+
+   <div class="checkout-container">
+      <section id="info">
+         <form action="{% url 'orders:create_order' %}" method="post" id="personalInfo">
+            <fieldset>
+               <legend class="checkout-labels">Contact Information</legend>
+
+   <!--           email tooltip example -->
+
+               <div class="field">
+                  <input class="input-details" type="email" name="email" id="email" placeholder=" ">
+                  <label for="email">Email</label>
+               </div>
+            </fieldset>
+
+            <fieldset>
+               <legend class="checkout-labels">Shipping Information</legend>
+
+               <div class="field">
+                  <input class="input-details" type="text" id="firstName" name="firstName" placeholder=" " required>
+                  <label for="firstName">First Name</label>
+               </div>
+
+               <div class="field">
+                  <input class="input-details" type="text" id="lastName" name="lastName" placeholder=" " required>
+                  <label for="lastName">Last Name</label>
+               </div>
+
+               <div class="field">
+                  <input class="input-details" type="text" id="address" name="address" placeholder=" " required>
+                  <label for="address">Address</label>
+               </div>
+
+               <div class="field">
+                  <input class="input-details" type="text" id="zip" name="zip" placeholder=" " pattern="[0-9]*" maxlength="5" required>
+                  <label for="zip">Zip Code </label>
+               </div>
+
+               <div class="field">
+                  <input class="input-details" type="text" id="city" name="city" placeholder=" " required>
+                  <label for="city">City</label>
+               </div>
+
+               <div class="field">
+                  <input class="input-details" type="text" id="state" name="state" placeholder=" " required>
+                  <label for="state">State</label>
+               </div>
+
+               <div class="field">
+                  <input class="input-details" type="tel" id="phone" name="phone" placeholder=" " required>
+                  <label for="phone">Phone (123) 456-7890</label>
+               </div>
+
+            </fieldset>
+
+            <input type="submit" href="{% url 'orders:create_order' %}" class="formBtn" id="placeOrder" value="Place Order">
+            {% csrf_token %}
+         </form>
+   <!--        </section>-->
+
+      </section>
+
+      <section class="order-summary">
+         <div class="order-info">
+            <h3>Your Order</h3>
+            <ul>
+               {% for item in cart %}
+                  <li class="order-details">
+                     {{ item.quantity }} x {{ item.clothing.name }}
+                     <span>$ {{ item.total_price }}</span>
+                  </li>
+               {% endfor %}
+            </ul>
+            <p>Total: $ {{ cart.get_total_price }}</p>
+         </div>
+      </section>
+   </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'orders/create.js' %}"></script>
+{% endblock %}

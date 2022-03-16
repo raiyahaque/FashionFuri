@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+      <link href="{% static 'myapp/style.css' %}" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Caveat Brush' rel='stylesheet'>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      <title>{% block title %}Fashion FurI{% endblock %}</title>
+
+      {% block script %}
+      {% endblock %}
+
+    </head>
+    <body>
+         <div class="container">
+            <ul class="site-logo">
+               <li><a href="/" id="logo" class="logo"> Fashion FurI</a></li>
+            </ul>
+
+            <nav class="first-nav">
+               <ul class="first-nav-list">
+                  {% if user.is_authenticated %}
+                  <li class="first-nav-item">
+                     <a class="first-nav-link">Hi, {{ request.user }}</a>
+                     <ul class="dropdown-list">
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:logout' %}" class="dropdown-list-link">Log Out</a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="first-nav-item">
+                     {% with total_items=cart|length %}
+                        {% if total_items > 0 %}
+                           <a href="{% url 'cart:details' %}" class="first-nav-link" id="cart"><i class="fas fa-shopping-cart"></i>Cart(<span> {{ total_items }} Items </span>)</a>
+                        {% else %}
+                           <a href="{% url 'cart:details' %}" class="first-nav-link" id="cart"><i class="fas fa-shopping-cart"></i>Cart(<span> 0 Items </span>)</a>
+                           {% endif %}
+                     {% endwith %}
+                  </li>
+                  {% else %}
+                  <li class="first-nav-item">
+                     <a href="{% url 'myapp:login' %}" class="first-nav-link"><i class="fas fa-sign-in-alt"></i>Sign Up / Log In</a>
+                  </li>
+                  <li class="first-nav-item">
+                     <a href="#" class="first-nav-link"><i class="fas fa-shopping-cart"></i>Cart(<span> Items </span>)</a>
+                  </li>
+                  {% endif %}
+               </ul>
+            </nav>
+
+            <div class="search">
+               <form class="search-form" method="post" action="{% url 'myapp:search' %}">
+                  {% csrf_token %}
+                  <input type="text" class="search-input" name="search" placeholder="Search">
+                  <button class="search-btn"><i class="fas fa-search"></i></button>
+               </form>
+            </div>
+
+            <nav class="second-nav">
+               <ul class="second-nav-list">
+                  <li class="second-nav-item">
+                     <a href="#" class="second-nav-link">All Items</a>
+                     <ul class="dropdown-list">
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:get_clothes' category_slug='tops' %}" class="dropdown-list-link">Tops</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:get_clothes' category_slug='bottoms' %}" class="dropdown-list-link">Bottoms</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:get_clothes' category_slug='sweaters' %}" class="dropdown-list-link">Sweaters</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:get_clothes' category_slug='jackets' %}" class="dropdown-list-link">Jackets</a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="second-nav-item">
+                     <a href="#" class="second-nav-link">Men</a>
+                     <ul class="dropdown-list">
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='tops' gender='male' %}" class="dropdown-list-link">Tops</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='bottoms' gender='male' %}" class="dropdown-list-link">Bottoms</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='sweaters' gender='male' %}" class="dropdown-list-link">Sweaters</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='jackets' gender='male' %}" class="dropdown-list-link">Jackets</a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="second-nav-item">
+                     <a href="#" class="second-nav-link">Women</a>
+                     <ul class="dropdown-list">
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='tops' gender='female' %}" class="dropdown-list-link">Tops</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='bottoms' gender='female' %}" class="dropdown-list-link">Bottoms</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='sweaters' gender='female' %}" class="dropdown-list-link">Sweaters</a>
+                        </li>
+                        <li class="dropdown-list-item">
+                           <a href="{% url 'myapp:gender_clothes' category_slug='jackets' gender='female' %}" class="dropdown-list-link">Jackets</a>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </nav>
+
+         </div>
+
+
+
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+    <section class="contact">
+      <div class="customer-support">
+          <h1 class="customer-support-heading">Customer Support</h1>
+          <a href="#" class="customer-support-element">Customer Service</a>
+          <a href="#" class="customer-support-element">Shipping and Handling</a>
+          <a href="#" class="customer-support-element">Returns</a>
+          <a href="#" class="customer-support-element">About Us</a>
+      </div>
+
+      <div class="find-us">
+          <h1 class="find-us-heading">Find Us</h1>
+          <a href="#" class="customer-support-element">1-408-930-3376</a>
+          <a href="#" class="customer-support-element">haque@sbcglobal.net</a>
+      </div>
+
+   </section>
+</html>

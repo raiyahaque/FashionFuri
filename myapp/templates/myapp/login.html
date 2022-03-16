@@ -1,0 +1,30 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+   <span class="log-in">LOG IN</span>
+   <div class="login-wrapper">
+      {% if message %}
+            <div class="login_message">{{ message }}</div>
+      {% endif %}
+      <form action="{% url 'myapp:login' %}" method="post" id="login-form" name="loginform">
+         {% csrf_token %}
+         <div class="field">
+            <input class="input-details" type="email" name="email" id="email-login" placeholder=" " required>
+            <label for="email" id="email-label">Email</label>
+        </div>
+        <div class="field">
+           <input class="input-details" type="password" name="password" id="password-login" placeholder=" " required>
+           <label class="password" id="password-label">Password</label>
+        </div>
+        <input id="login-btn" class="btn-top" type="submit" value="Login">
+      </form>
+    <span class="register-link">Don't have an account? <a href="{% url 'myapp:register' %}">Register here.</a></span>
+   </div>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{% static 'myapp/login.js' %}"></script>
+{% endblock %}

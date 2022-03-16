@@ -1,0 +1,22 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+<div class="image-container">
+   <section class="image1">
+      <img src="static/myapp/homepageimage1.jpg" width=100% class="image-gallery">
+      <button class="shop-btn"> <a href="{% url 'myapp:gender_clothes' category_slug='None' gender='male' %}">Shop Men's</a></button>
+   </section>
+   <section class="image2">
+      <img src="static/myapp/homepageimage2.jpg" width=100% class="image-gallery">
+      <button class="shop-btn"><a href="{% url 'myapp:gender_clothes' category_slug='None' gender='female' %}">Shop Women's</a></button>
+
+   </section>
+</div>
+{% endblock %}
+
+
+{% block script %}
+   <script src="{% static 'myapp/homepage.js' %}"></script>
+{% endblock %}

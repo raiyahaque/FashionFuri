@@ -1,0 +1,18 @@
+{% extends "myapp/layout.html" %}
+
+{% block body %}
+<section class="clothing-products">
+   {% if message %}
+         <div class="search_message">{{ message }}</div>
+   {% endif %}
+   {% for clothing in clothes %}
+      <div class="product">
+         <img class="clothing-img" src="{{ clothing.image.url }}" width=100%>
+         <a id="clothing-title" href="{% url 'myapp:clothing_description' clothing_id=clothing.pk slug=clothing.slug %}" class="product-details"> {{ clothing.name }}</a>
+         <br>
+         <span class="product-details">${{ clothing.price }}</span>
+      </div>
+   {% endfor %}
+</section>
+
+{% endblock %}

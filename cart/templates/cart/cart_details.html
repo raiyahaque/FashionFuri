@@ -1,0 +1,35 @@
+{% extends "myapp/layout.html" %}
+
+{% block body %}
+<strong class="title">Cart</strong>
+<section class="cart-products">
+   {% for item in cart %}
+      {% with clothing=item.clothing %}
+      <div class="item">
+         <img class="cart-img" src="{{ clothing.image.url }}" width=100%>
+         <div class="cart-product">
+            <a class="cart-title"> {{ clothing.name }}</a>
+            <br>
+            <span class="cart-quantity"> Quantity: {{ item.quantity }}</span>
+            <br>
+            <span class="cart-price">Price: ${{ item.price }}</span>
+            <br>
+            <span class="cart-size">Size: {{ item.size }}</span>
+            <br>
+            <form action="{% url 'cart:cart_remove' clothing.id %}" method="post">
+               <input class="remove-btn" type="submit" value="Remove">
+               {% csrf_token %}
+            </form>
+         </div>
+      </div>
+      <hr>
+      {% endwith %}
+   {% endfor %}
+
+   <span class="cart-total">Total: ${{ cart.get_total_price }}</span>
+   <div class="proceed-btn"><a class="checkout" href="{% url 'orders:create_order' %}">Proceed to Checkout</a></div>
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+   <div class="product_description_page">
+      <img class="clothing-details-img" src="{{ clothing.image.url }}" width=60%>
+      <div class="details">
+         <a class="product-description-details"> {{ clothing.name }}</a>
+         <br>
+         <span class="product-description-details">${{ clothing.price }}</span>
+      </div>
+
+      <form class="add-to-bag" method="post" action="{% url 'cart:cart_add' clothing_id=clothing.pk %}">
+         {% csrf_token %}
+         <span class="cart-form">Quantity: {{ cart_product_form }}</span>
+         <div class="sizes">
+            <select name="sizes" id="sizes">
+               <option value="xs">XS</option>
+               <option value="small">Small</option>
+               <option value="medium">Medium</option>
+               <option value="large">Large</option>
+            </select>
+         </div>
+
+         <div class="cart-btn">
+            <input class="bag-btn" type="submit" value="Add To Cart">
+         </div>
+      </form>
+
+      <span class="clothing-details">Details</span>
+      <hr>
+
+   </div>
+
+
+{% endblock %}

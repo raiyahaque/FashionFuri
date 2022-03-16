@@ -1,0 +1,33 @@
+{% extends "myapp/layout.html" %}
+
+{% block body %}
+<section class="clothing-products">
+   {% for clothing in page_obj %}
+      <div class="product">
+         <img class="clothing-img" src="{{ clothing.image.url }}" width=100%>
+         <a id="clothing-title" href="{% url 'myapp:clothing_description' clothing_id=clothing.pk slug=clothing.slug %}" class="product-details"> {{ clothing.name }}</a>
+         <br>
+         <span class="product-details">${{ clothing.price }}</span>
+      </div>
+   {% endfor %}
+</section>
+
+   <div class="pagination">
+      <span class="step-links">
+         {% if page_obj.has_previous %}
+            <a href="?page=1"> First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+         {% endif %}
+
+         <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+         </span>
+
+         {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last </a>
+         {% endif %}
+      </span>
+   </div>
+
+{% endblock %}
